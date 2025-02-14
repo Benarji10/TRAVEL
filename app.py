@@ -4,11 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import bcrypt_sha256
 
 import stripe
-stripe.api_key = 'kkalyankumar@2484'
+stripe.api_key = ''
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'jaishreeram@7777' 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/signin' 
-app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SECRET_KEY'] = '' 
+app.config['SQLALCHEMY_DATABASE_URI'] = '' 
+app.config['SESSION_TYPE'] = ''
 
 db = SQLAlchemy(app)
 
