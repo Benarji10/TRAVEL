@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Slideshow</title>
+<style>
+    body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f0f0;
+    }
+    
+    .slideshow {
+        position: relative;
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .slideshow img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        z-index: 1; /* Ensure images are below title */
+    }
+
+    .slideshow img.active {
+        opacity: 1;
+    }
+
+    .slideshow img:first-child {
+        opacity: 1;
+    }
+    .slideshow-title {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 24px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        z-index: 2; /* Ensure title is above images */
+    }
+</style>
+</head>
+<body>
+    
+    <div class="slideshow">
+        <div class="slideshow-title">Tirupati</div>
+        <img class="active" src="https://static.toiimg.com/thumb/msid-102518912,width-1280,resizemode-4/102518912.jpg" alt="Image 1">
+        <img src="https://static.toiimg.com/photo/msid-86529807/86529807.jpg" alt="Image 2">
+        <img src="https://static.toiimg.com/photo/imgsize-83314,msid-90209657/90209657.jpg" alt="Image 3">
+        <img src="https://www.holidify.com/images/cmsuploads/compressed/shutterstock_1525421399_20200130183215_20200130183321.png" alt="Image 4">
+        <img src="https://telugu.nativeplanet.com/img/2019/02/12-1527328365-1549284821.jpg" alt="Image 5">
+        <img src="https://i.ytimg.com/vi/-CT0AzdrPUw/maxresdefault.jpg" alt="Image 6">
+    </div>
+    
+    <script>
+        const images = document.querySelectorAll('.slideshow img');
+        let currentIndex = 0;
+
+        setInterval(() => {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].classList.add('active');
+        }, 5000); // Change image every 5 seconds
+    </script>
+</body>
+</html>

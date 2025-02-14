@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People Information Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+    
+    </style>
+    </head>
+    
+<body>
+    <div class="container">
+        <h1>Enter People Information</h1>
+        <form id="peopleForm">
+            <label for="numberOfPeople">Number of People:</label>
+            <input type="number" id="numberOfPeople" min="1" max="10">
+            <button type="button" id="submitBtn">Generate Form</button>
+        </form>
+        <div id="peopleInfo" class="hidden">
+            <h2>Enter Information for Each Person</h2>
+        </div>
+        <button type="button" id="submitDataBtn" class="hidden">Submit Data</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      
+<script>
+  const submitBtn = document.getElementById('submitBtn');
+  const numberOfPeopleInput = document.getElementById('numberOfPeople');
+  const peopleInfo = document.getElementById('peopleInfo');
+  const submitDataBtn = document.getElementById('submitDataBtn');
+
+  submitBtn.addEventListener('click', () => {
+      const numberOfPeople = parseInt(numberOfPeopleInput.value);
+
+      let html = '<h2>Enter Information for Each Person</h2>';
+
+      for (let i = 1; i <= numberOfPeople; i++) {
+                html += `
+                <label for="name${i}">Name:</label>
+                <input type="text" id="name${i}" required><br>
+                <label for="age${i}">Age:</label>
+                <input type="number" id="age${i}" required><br>
+                <label for="gender${i}">Gender:</label>
+                <input type="text" id="gender${i}" required><br>
+                <label for="date_of_departure${i}">Date of Departure:</label>
+                <input type="date" id="date_of_departure${i}" required><br>
+                <label for="amount${i}">Amount:</label>
+                <input type="number" step="0.01" id="amount${i}" required><br>
+                `;
+            }
+
+      peopleInfo.innerHTML = html;
+      peopleInfo.classList.remove('hidden');
+      submitDataBtn.classList.remove('hidden');
+  });
+
+  submitDataBtn.addEventListener('click', async () => {
+      const numberOfPeople = parseInt(numberOfPeopleInput.value);
+      const peopleData = [];
+      for (let i = 1; i <= numberOfPeople; i++) {
+                const name = document.getElementById(`name${i}`).value;
+                const age = parseInt(document.getElementById(`age${i}`).value);
+                const gender = document.getElementById(`gender${i}`).value;
+                const date_of_departure = document.getElementById(`date_of_departure${i}`).value;
+                const amount = parseFloat(document.getElementById(`amount${i}`).value);
+
+                peopleData.push({ name, age, gender, date_of_departure, amount });
+            }
+
+
+      try {
+          const response = await fetch('/submit_data3', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ peopleData }),
+          });
+
+          if (response.ok) {
+              console.log('Data submitted successfully');
+              // Clear the form and redirect to payment page
+              clearForm();
+              window.location.href = '/payment'; // Change '/payment' to your actual payment page URL
+          } else {
+              console.error('Error submitting data');
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
+  });
+
+  function clearForm() {
+      numberOfPeopleInput.value = ''; // Reset the number of people input
+      peopleInfo.innerHTML = ''; // Clear the peopleInfo section
+      peopleInfo.classList.add('hidden'); // Hide the peopleInfo section
+      submitDataBtn.classList.add('hidden'); // Hide the submitDataBtn
+  }
+</script>
+</body>
+</html>

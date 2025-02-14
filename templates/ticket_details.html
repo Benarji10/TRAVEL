@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            margin: 10px 0;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ticket Details</h1>
+        {% if ticket_data %}
+        <p><strong>Place:</strong> {{ ticket_data.table_name }}</p>
+        <p><strong>Name:</strong> {{ ticket_data.name }}</p>
+        <p><strong>Age:</strong> {{ ticket_data.age }}</p>
+        <p><strong>Gender:</strong> {{ ticket_data.gender }}</p>
+        <p><strong>Date of Departure:</strong> {{ ticket_data.date_of_departure }}</p>
+        <p><strong>Amount:</strong> {{ ticket_data.amount }}</p>
+        <!-- Add more fields as needed -->
+        {% else %}
+        <p>No ticket details found for the provided name.</p>
+        {% endif %}
+        <a href="/">Back to Home</a>
+    </div>
+</body>
+</html>
